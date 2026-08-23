@@ -1,0 +1,34 @@
+name: Follow back
+
+on:
+  schedule:
+    - cron: '13 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  follow-back:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.FOLLOW_BACK_TOKEN }}
+      GH_USER: levimackay
+    steps:
+      - name: Follow anyone who follows me and isn't followed back
+        run: |
+          set -euo pipefail
+
+          gh api "users/${GH_USER}/followers" --paginate --jq '.[].login' | sort -u > followers.txt
+          gh api "user/following" --paginate --jq '.[].login' | sort -u > following.txt
+          comm -23 followers.txt following.txt > to_follow.txt
+
+          count=$(wc -l < to_follow.txt | tr -d ' ')
+          echo "Followers: $(wc -l < followers.txt | tr -d ' '), already following: $(wc -l < following.txt | tr -d ' '), new to follow back: ${count}"
+
+          while IFS= read -r user; do
+            [ -z "$user" ] && continue
+            echo "Following back: $user"
+            gh api -X PUT "user/following/${user}"
+            sleep 2
+          done < to_follow.txt
