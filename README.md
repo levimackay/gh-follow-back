@@ -9,5 +9,3 @@ Runs on a schedule via GitHub Actions (`.github/workflows/follow-back.yml`), eve
 1. Create a classic personal access token at https://github.com/settings/tokens with only the `user:follow` scope. Nothing else is needed.
 2. In this repo's settings, add it as an Actions secret named `FOLLOW_BACK_TOKEN`.
 3. The workflow runs automatically from then on, or trigger it manually from the Actions tab.
-
-**Last updated:** 2026-08-29 11:47 PDT
