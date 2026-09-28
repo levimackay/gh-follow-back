@@ -2,7 +2,7 @@ name: Follow back
 
 on:
   schedule:
-    - cron: '13 */6 * * *'
+    - cron: '13 6 * * *'
   workflow_dispatch:
 
 permissions:
