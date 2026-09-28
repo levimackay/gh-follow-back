@@ -2,7 +2,7 @@
 
 Follows back anyone who follows levimackay on GitHub and isn't already followed.
 
-Runs on a schedule via GitHub Actions (`.github/workflows/follow-back.yml`), every 6 hours. No local state files — each run diffs the live followers list against the live following list, so there's nothing to drift or get out of sync.
+Runs on a schedule via GitHub Actions (`.github/workflows/follow-back.yml`), once a day at 06:13 UTC. There are no local state files. Each run diffs the live followers list against the live following list, so there's nothing to drift or get out of sync.
 
 ## Setup
 
